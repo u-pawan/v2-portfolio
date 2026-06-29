@@ -1,5 +1,7 @@
 # React + TypeScript + Vite
 
+Live demo: https://6a4210b11900c48ad1f351f0--pawan-build.netlify.app/
+
 This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
 
 Currently, two official plugins are available:
