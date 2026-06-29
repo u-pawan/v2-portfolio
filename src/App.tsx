@@ -7,16 +7,13 @@ import {
   useMotionValue, 
   useMotionTemplate 
 } from 'framer-motion';
-import { 
-  ArrowRight, 
-  ChevronDown, 
-  Menu, 
-  X, 
-  Code2, 
-  Cpu, 
-  Zap, 
-  Activity, 
-  ArrowUpRight 
+import {
+  ArrowRight,
+  ChevronDown,
+  Menu,
+  X,
+  Code2,
+  ArrowUpRight
 } from 'lucide-react';
 
 // --- Lenis Smooth Scrolling Setup ---
@@ -96,65 +93,44 @@ interface Project {
   category: string;
   tags: string[];
   description: string;
+  link?: string;
 }
 
 const projects: Project[] = [
-  { 
-    title: "Invoicer", 
-    category: "AI-Powered / Fintech", 
-    tags: ["AI", "Fintech", "Productivity", "UX Design"],
-    description: "An AI-powered invoice maker designed for freelance creatives. Translates natural language into structured billing, eliminating friction and ensuring faster payments with zero manual entry.", 
+  {
+    title: "Pipeline Builder",
+    category: "Visual Workflow Editor",
+    tags: ["React", "FastAPI", "DAG", "Workflow"],
+    description: "A visual workflow editor with reusable node abstraction and dynamic Text nodes. Integrated FastAPI backend to validate DAG structure and compute pipeline node/edge metrics.",
   },
-  { 
-    title: "BuildHand", 
-    category: "Construction Tech / Infra SaaS",
-    tags: ["ConTech", "B2B SaaS", "Operations", "Infrastructure"],
-    description: "A visual-first SaaS ecosystem bridging field execution and boardroom strategy. Designed for founders demanding transparency, moving away from 'Excel-style' management.", 
+  {
+    title: "GBK Apparels",
+    category: "E-Commerce / Retail",
+    tags: ["Web", "E-Commerce", "UI/UX", "Retail"],
+    description: "A full-featured e-commerce platform for an apparel brand — product listings, cart, and checkout flow designed for a seamless shopping experience.",
+    link: "https://gbkapparels.com",
   },
-  { 
-    title: "Prognos Labs", 
-    category: "AI Consulting / Digital HQ",
-    tags: ["LLMOps", "Next.js 15", "Enterprise UI", "GEO Strategy"],
-    description: "Enterprise-grade platform focused on 'Digital HQ' principles: immediate trust, role-based clarity for CTOs, and technical specifications that tell search engines why Prognos is a leader in custom LLMs.", 
+  {
+    title: "Trello Clone",
+    category: "Productivity / Task Management",
+    tags: ["React", "Drag & Drop", "Kanban", "Open Source"],
+    description: "A feature-complete Trello-inspired kanban board with drag-and-drop task management, multiple boards, and real-time card editing.",
+    link: "https://github.com/u-pawan/trello_v1",
   },
-  { 
-    title: "FridayJob24", 
-    category: "Hiring Platform / EdTech SaaS",
-    tags: ["EdTech", "Hiring", "Maps API", "Real-time"],
-    description: "Engineered an interactive map interface for local job discovery and a 'Direct-to-Founder' communication layer, filtering signal-to-noise for modern startups and student talent.", 
+  {
+    title: "Biometric Auth Enhancement",
+    category: "Mobile Security / Enterprise App",
+    tags: ["Ionic", "Angular", "Face Recognition", "Fingerprint"],
+    description: "Integrated face recognition and fingerprint authentication into an enterprise mobile application, improving security, access control, and overall user experience.",
   },
-  { 
-    title: "SecureVote", 
-    category: "GovTech / Security Web App",
-    tags: ["GovTech", "Cryptography", "JWT", "Security"],
-    description: "Developed during a high-stakes hackathon, this platform solves the 'trust gap' in digital voting through rigorous cryptographic implementation and stateless JWT authentication.", 
-  },
-  { 
-    title: "SmartWatts", 
-    category: "Sustainability / FinTech",
-    tags: ["Sustainability", "Data Viz", "AI Logic", "Dashboard"],
-    description: "Generates a granular summary of energy 'drainers' from simple inputs. Features high-performance data visualization and an AI-logic engine for green alternatives.", 
-  },
-  { 
-    title: "Khetak", 
-    category: "CyberSec / AI Hackathon Project",
-    tags: ["CyberSecurity", "AI Safety", "Browser Extension"],
-    description: "A smart digital guardian browser extension that intelligently blurs 18+ content across all social media platforms in real-time, backed by intent-aware AI models.", 
-  },
-  { 
-    title: "Vidhya Seva", 
-    category: "Healthcare / Telemedicine",
-    tags: ["Healthcare", "Telemedicine", "SaaS", "UX Design"],
-    description: "A comprehensive health hub designed to connect patients with doctors seamlessly. It bridges the gap between seeking medical care and managing health records with a unified platform.", 
+  {
+    title: "System Sleep/Lock Tracker",
+    category: "Data Analysis / Monitoring Tool",
+    tags: ["Python", "Data Analysis", "Logging", "Dashboard"],
+    description: "A system activity monitoring application with structured logging and reporting, providing granular insights into sleep/lock cycles for process analysis.",
   },
 ];
 
-const services = [
-  { icon: <Cpu className="w-8 h-8 text-blue-400" />, title: "Custom LLMs & Chatbots", desc: "Intelligent, context-aware AI agents trained on your specific business data." },
-  { icon: <Zap className="w-8 h-8 text-yellow-400" />, title: "Automation Workflows", desc: "Eliminate manual friction with tailored automation and custom script integrations." },
-  { icon: <Activity className="w-8 h-8 text-emerald-400" />, title: "Predictive Analytics", desc: "High-performance data visualization and AI-logic engines that turn raw data into strategic insights." },
-  { icon: <Code2 className="w-8 h-8 text-purple-400" />, title: "Full-Stack MVPs", desc: "End-to-end web and mobile applications engineered and shipped in 4-8 weeks." },
-];
 
 const faqs = [
   {
@@ -224,9 +200,90 @@ const ScrollProgress = () => {
   );
 };
 
+const ContactModal = ({ onClose }: { onClose: () => void }) => {
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
+  }, [onClose]);
+
+  return (
+    <AnimatePresence>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        className="fixed inset-0 z-[200] flex items-center justify-center px-4"
+        onClick={onClose}
+      >
+        <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" />
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9, y: 20 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.9, y: 20 }}
+          transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+          className="relative z-10 w-full max-w-md bg-[#111] border border-white/10 rounded-3xl p-8 shadow-2xl"
+          onClick={e => e.stopPropagation()}
+        >
+          <button onClick={onClose} className="absolute top-5 right-5 w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-white/10 transition-colors">
+            <X className="w-4 h-4 text-zinc-400" />
+          </button>
+
+          <h3 className="text-3xl font-black tracking-tighter text-white mb-2">Let's Connect</h3>
+          <p className="text-zinc-500 mb-8 font-medium">Reach out via any channel below.</p>
+
+          <div className="flex flex-col gap-4">
+            <a
+              href="mailto:upwan592@gmail.com?subject=Project%20Inquiry&body=Hi%20Pawan%2C%20I%20came%20across%20your%20portfolio%20and%20I%27d%20love%20to%20discuss%20a%20project%20with%20you.%20Are%20you%20available%20for%20a%20quick%20chat%3F"
+              className="group flex items-center gap-4 p-5 rounded-2xl bg-zinc-900 border border-white/10 hover:border-white/30 transition-all"
+            >
+              <div className="w-11 h-11 rounded-full bg-white/5 border border-white/10 flex items-center justify-center flex-shrink-0 group-hover:bg-white group-hover:text-black transition-all duration-300">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+              </div>
+              <div>
+                <p className="text-zinc-500 text-xs font-bold uppercase tracking-widest mb-0.5">Email</p>
+                <p className="text-white font-semibold">upwan592@gmail.com</p>
+              </div>
+            </a>
+
+            <a
+              href="tel:+918707483603"
+              className="group flex items-center gap-4 p-5 rounded-2xl bg-zinc-900 border border-white/10 hover:border-white/30 transition-all"
+            >
+              <div className="w-11 h-11 rounded-full bg-white/5 border border-white/10 flex items-center justify-center flex-shrink-0 group-hover:bg-white group-hover:text-black transition-all duration-300">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
+              </div>
+              <div>
+                <p className="text-zinc-500 text-xs font-bold uppercase tracking-widest mb-0.5">Phone</p>
+                <p className="text-white font-semibold">+91 8707483603</p>
+              </div>
+            </a>
+
+            <a
+              href="https://wa.me/918707483603"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex items-center gap-4 p-5 rounded-2xl bg-zinc-900 border border-white/10 hover:border-green-500/40 transition-all"
+            >
+              <div className="w-11 h-11 rounded-full bg-white/5 border border-white/10 flex items-center justify-center flex-shrink-0 group-hover:bg-green-500 group-hover:border-green-500 transition-all duration-300">
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              </div>
+              <div>
+                <p className="text-zinc-500 text-xs font-bold uppercase tracking-widest mb-0.5">WhatsApp</p>
+                <p className="text-white font-semibold">+91 8707483603</p>
+              </div>
+            </a>
+          </div>
+        </motion.div>
+      </motion.div>
+    </AnimatePresence>
+  );
+};
+
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [contactOpen, setContactOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -235,43 +292,46 @@ const Navbar = () => {
   }, []);
 
   return (
-    <nav className={`fixed top-0 w-full z-50 transition-all duration-500 ${scrolled ? 'bg-[#050505]/80 backdrop-blur-xl border-b border-white/10 py-4' : 'bg-transparent py-8'}`}>
-      <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
-        <a href="#" className="text-2xl font-black tracking-tighter text-white hover:opacity-70 transition-opacity">PAWAN.</a>
-        
-        <div className="hidden md:flex items-center space-x-12 text-sm font-semibold text-zinc-400 tracking-wide">
-          <a href="#work" className="hover:text-white transition-colors">Work</a>
-          <a href="#services" className="hover:text-white transition-colors">Services</a>
-          <a href="#faq" className="hover:text-white transition-colors">FAQ</a>
-        </div>
-        
-        <a href="#contact" className="hidden md:inline-flex items-center justify-center px-6 py-2.5 text-sm font-bold text-black bg-white rounded-full hover:scale-105 active:scale-95 transition-all">
-          Start Your Project
-        </a>
-        
-        <button onClick={() => setIsOpen(!isOpen)} className="md:hidden text-white p-2 z-50">
-          {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-        </button>
-      </div>
+    <>
+      {contactOpen && <ContactModal onClose={() => setContactOpen(false)} />}
+      <nav className={`fixed top-0 w-full z-50 transition-all duration-500 ${scrolled ? 'bg-[#050505]/80 backdrop-blur-xl border-b border-white/10 py-4' : 'bg-transparent py-8'}`}>
+        <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
+          <a href="#" className="text-2xl font-black tracking-tighter text-white hover:opacity-70 transition-opacity">PAWAN.</a>
 
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="absolute top-full left-0 w-full bg-[#050505] border-b border-white/10 shadow-2xl md:hidden"
-          >
-            <div className="flex flex-col px-6 py-8 space-y-6 text-xl font-bold tracking-tight">
-              <a href="#work" onClick={() => setIsOpen(false)} className="text-zinc-400 hover:text-white">Work</a>
-              <a href="#services" onClick={() => setIsOpen(false)} className="text-zinc-400 hover:text-white">Services</a>
-              <a href="#faq" onClick={() => setIsOpen(false)} className="text-zinc-400 hover:text-white">FAQ</a>
-              <a href="#contact" onClick={() => setIsOpen(false)} className="inline-flex items-center justify-center px-6 py-4 text-black bg-white rounded-full w-full mt-4">Start Your Project</a>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </nav>
+          <div className="hidden md:flex items-center space-x-12 text-sm font-semibold text-zinc-400 tracking-wide">
+            <a href="#work" className="hover:text-white transition-colors">Work</a>
+            <a href="#services" className="hover:text-white transition-colors">Services</a>
+            <a href="#faq" className="hover:text-white transition-colors">FAQ</a>
+          </div>
+
+          <button onClick={() => setContactOpen(true)} className="hidden md:inline-flex items-center justify-center px-6 py-2.5 text-sm font-bold text-black bg-white rounded-full hover:scale-105 active:scale-95 transition-all">
+            Start Your Project
+          </button>
+
+          <button onClick={() => setIsOpen(!isOpen)} className="md:hidden text-white p-2 z-50">
+            {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
+        </div>
+
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              className="absolute top-full left-0 w-full bg-[#050505] border-b border-white/10 shadow-2xl md:hidden"
+            >
+              <div className="flex flex-col px-6 py-8 space-y-6 text-xl font-bold tracking-tight">
+                <a href="#work" onClick={() => setIsOpen(false)} className="text-zinc-400 hover:text-white">Work</a>
+                <a href="#services" onClick={() => setIsOpen(false)} className="text-zinc-400 hover:text-white">Services</a>
+                <a href="#faq" onClick={() => setIsOpen(false)} className="text-zinc-400 hover:text-white">FAQ</a>
+                <button onClick={() => { setIsOpen(false); setContactOpen(true); }} className="inline-flex items-center justify-center px-6 py-4 text-black bg-white rounded-full w-full mt-4">Start Your Project</button>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </nav>
+    </>
   );
 };
 
@@ -338,13 +398,13 @@ const Marquee = () => {
       >
         {[...Array(4)].map((_, i) => (
            <React.Fragment key={i}>
-             <span className="text-zinc-400 hover:text-white transition-colors duration-500 cursor-default">BUILDHAND</span>
+             <span className="text-zinc-400 hover:text-white transition-colors duration-500 cursor-default">PIPELINE BUILDER</span>
              <span className="text-zinc-800">•</span>
-             <span className="text-zinc-400 hover:text-white transition-colors duration-500 cursor-default">PROGNOS LABS</span>
+             <span className="text-zinc-400 hover:text-white transition-colors duration-500 cursor-default">GBK APPARELS</span>
              <span className="text-zinc-800">•</span>
-             <span className="text-zinc-400 hover:text-white transition-colors duration-500 cursor-default">FRIDAYJOB24</span>
+             <span className="text-zinc-400 hover:text-white transition-colors duration-500 cursor-default">TRELLO CLONE</span>
              <span className="text-zinc-800">•</span>
-             <span className="text-zinc-400 hover:text-white transition-colors duration-500 cursor-default">VIBEMATCH</span>
+             <span className="text-zinc-400 hover:text-white transition-colors duration-500 cursor-default">BIOMETRIC AUTH</span>
              <span className="text-zinc-800">•</span>
            </React.Fragment>
         ))}
@@ -402,6 +462,13 @@ const SpotlightCard = ({ project, index }: SpotlightCardProps) => {
     mouseY.set(clientY - top);
   }
 
+  const handleLinkClick = (e: React.MouseEvent) => {
+    if (project.link) {
+      e.stopPropagation();
+      window.open(project.link, '_blank', 'noopener,noreferrer');
+    }
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 50 }}
@@ -428,7 +495,10 @@ const SpotlightCard = ({ project, index }: SpotlightCardProps) => {
           <span className="text-xs font-bold bg-white/5 border border-white/10 rounded-full px-4 py-2 text-zinc-300 uppercase tracking-widest backdrop-blur-md">
             {project.category}
           </span>
-          <div className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all duration-300 flex-shrink-0 cursor-pointer">
+          <div
+            onClick={handleLinkClick}
+            className={`w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all duration-300 flex-shrink-0 ${project.link ? 'cursor-pointer' : 'opacity-40'}`}
+          >
             <ArrowUpRight className="w-5 h-5 group-hover:rotate-45 transition-transform duration-300" />
           </div>
         </div>
@@ -676,36 +746,167 @@ const ToolsSection = () => {
 
 const Services = () => {
   return (
-    <section id="services" className="py-32 px-6 bg-[#0a0a0a] border-t border-white/5 relative overflow-hidden">
+    <section id="services" className="py-32 px-6 bg-[#0d0d0d] border-t border-white/5 relative overflow-hidden">
       <div className="max-w-7xl mx-auto relative z-10">
-        <div className="mb-20">
-          <motion.h2 
+
+        {/* Header row */}
+        <div className="flex items-end justify-between mb-10">
+          <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-5xl md:text-7xl font-black text-white mb-6 tracking-tighter"
+            className="text-6xl md:text-8xl leading-none tracking-tight"
           >
-            Capabilities
+            <span className="font-black text-white">MY </span>
+            <span style={{ fontFamily: "'Playfair Display', serif" }} className="italic text-zinc-400">services</span>
           </motion.h2>
+          <motion.span
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            className="hidden md:flex items-center gap-2 text-xs font-bold tracking-widest text-emerald-400 uppercase"
+          >
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+            Full Cycle Development
+          </motion.span>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {services.map((service, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
-              viewport={{ once: true }}
-              className="p-10 rounded-[2rem] bg-[#050505] border border-white/5 hover:border-white/10 transition-colors flex flex-col items-start group"
-            >
-              <div className="p-4 bg-zinc-900 rounded-2xl border border-white/5 mb-8 group-hover:scale-110 group-hover:-rotate-3 transition-transform duration-500">
-                {service.icon}
+
+        {/* Bento grid — top section */}
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-80px' }}
+          variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.08 } } }}
+          className="grid grid-cols-1 md:grid-cols-[2fr_1.4fr_2fr] grid-rows-2 gap-3 mb-3"
+          style={{ gridTemplateRows: 'auto auto' }}
+        >
+          {/* Mobile Apps — emerald dark, spans 2 rows */}
+          <motion.div
+            variants={{ hidden: { opacity: 0, y: 40 }, visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.16,1,0.3,1] } } }}
+            className="md:row-span-2 bg-gradient-to-br from-emerald-950/80 to-zinc-900 border border-emerald-500/20 rounded-3xl p-8 flex flex-col justify-between min-h-[280px] md:min-h-0"
+          >
+            <div className="flex items-start justify-between">
+              <span className="text-[10px] font-black uppercase tracking-widest text-emerald-400/60">High Performance</span>
+              <div className="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center">
+                <svg className="w-4 h-4 text-emerald-400/60" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
               </div>
-              <h3 className="text-3xl font-bold text-white mb-4 tracking-tight">{service.title}</h3>
-              <p className="text-zinc-400 text-lg leading-relaxed font-medium">{service.desc}</p>
-            </motion.div>
-          ))}
-        </div>
+            </div>
+            <div>
+              <h3 className="text-5xl md:text-6xl font-black text-white tracking-tighter leading-none mb-2">
+                Mobile<br />Apps
+              </h3>
+              <p className="text-zinc-400 font-semibold text-sm mb-6">iOS & Android Solutions</p>
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-black uppercase tracking-widest bg-emerald-500/10 border border-emerald-500/20 rounded-full px-4 py-2 text-emerald-400">React Native</span>
+                <div className="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center">
+                  <ArrowUpRight className="w-4 h-4 text-zinc-400" />
+                </div>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* SaaS — zinc-800, row 1 */}
+          <motion.div
+            variants={{ hidden: { opacity: 0, y: 40 }, visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.16,1,0.3,1] } } }}
+            className="bg-zinc-800 border border-white/5 rounded-3xl p-7 flex flex-col items-center justify-center text-center gap-3 min-h-[130px]"
+          >
+            <div className="w-10 h-10 flex items-center justify-center">
+              <svg className="w-8 h-8 text-zinc-500" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/></svg>
+            </div>
+            <div>
+              <h3 className="text-2xl font-black text-white tracking-tighter">SaaS</h3>
+              <p className="text-zinc-500 text-xs font-semibold uppercase tracking-widest">Scalable Platforms</p>
+            </div>
+          </motion.div>
+
+          {/* AI Agents — blue dark, spans 2 rows */}
+          <motion.div
+            variants={{ hidden: { opacity: 0, y: 40 }, visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.16,1,0.3,1] } } }}
+            className="md:row-span-2 bg-gradient-to-br from-blue-950/80 to-zinc-900 border border-blue-500/20 rounded-3xl p-8 flex flex-col justify-between min-h-[280px] md:min-h-0"
+          >
+            <div className="flex items-start justify-between">
+              <span className="text-[10px] font-black uppercase tracking-widest text-blue-400/60">Intelligence Layer</span>
+              <div className="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center">
+                <svg className="w-4 h-4 text-blue-400/60" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+              </div>
+            </div>
+            <div>
+              <h3 className="text-5xl md:text-6xl font-black text-white tracking-tighter leading-none mb-2">
+                AI<br />Agents
+              </h3>
+              <p className="text-zinc-400 font-semibold text-sm mb-6">Automate. Optimise. Evolve.</p>
+              <div className="grid grid-cols-2 gap-2">
+                {['Chatbots', 'Custom LLMs', 'Automation', 'Analytics'].map((tag) => (
+                  <span key={tag} className="text-xs font-bold text-blue-300 bg-blue-500/10 border border-blue-500/20 rounded-xl px-3 py-2 text-center">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Web Apps — zinc-800, row 2 */}
+          <motion.div
+            variants={{ hidden: { opacity: 0, y: 40 }, visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.16,1,0.3,1] } } }}
+            className="bg-zinc-800 border border-white/5 rounded-3xl p-7 flex flex-col items-center justify-center text-center gap-3 min-h-[130px]"
+          >
+            <div className="w-10 h-10 flex items-center justify-center">
+              <svg className="w-8 h-8 text-zinc-500" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+            </div>
+            <div>
+              <h3 className="text-2xl font-black text-white tracking-tighter">Web Apps</h3>
+              <p className="text-zinc-500 text-xs font-semibold uppercase tracking-widest">Modern & Responsive</p>
+            </div>
+          </motion.div>
+        </motion.div>
+
+        {/* Bottom 2-col dark cards */}
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-50px' }}
+          variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.1 } } }}
+          className="grid grid-cols-1 md:grid-cols-2 gap-3"
+        >
+          {/* UI/UX Design */}
+          <motion.div
+            variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.16,1,0.3,1] } } }}
+            className="bg-zinc-900 rounded-3xl p-8 flex flex-col gap-4"
+          >
+            <div className="flex items-start justify-between">
+              <div>
+                <h3 className="text-2xl md:text-3xl font-black tracking-tighter text-emerald-400">UI/UX DESIGN</h3>
+                <p className="text-zinc-500 text-xs font-bold uppercase tracking-widest mt-1">Award-winning interfaces</p>
+              </div>
+              <div className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center flex-shrink-0">
+                <ArrowUpRight className="w-5 h-5 text-zinc-400" />
+              </div>
+            </div>
+            <p className="text-zinc-500 text-sm leading-relaxed font-medium">
+              User-centric design that drives engagement and conversion. I build experiences, not just screens.
+            </p>
+          </motion.div>
+
+          {/* Product Strategy */}
+          <motion.div
+            variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.16,1,0.3,1] } } }}
+            className="bg-zinc-900 rounded-3xl p-8 flex flex-col gap-4"
+          >
+            <div className="flex items-start justify-between">
+              <div>
+                <h3 className="text-2xl md:text-3xl font-black tracking-tighter text-white">PRODUCT STRATEGY</h3>
+                <p className="text-zinc-500 text-xs font-bold uppercase tracking-widest mt-1">From MVP to Scale</p>
+              </div>
+              <div className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center flex-shrink-0">
+                <svg className="w-5 h-5 text-zinc-400" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+              </div>
+            </div>
+            <p className="text-zinc-500 text-sm leading-relaxed font-medium">
+              Roadmapping, feasibility analysis, and growth hacking for your digital product.
+            </p>
+          </motion.div>
+        </motion.div>
+
       </div>
     </section>
   );
@@ -724,7 +925,7 @@ const Testimonial = () => {
           viewport={{ once: true, margin: "-100px" }}
           className="text-3xl md:text-5xl lg:text-6xl font-medium leading-[1.3] text-white mb-16 tracking-tight"
         >
-          "Pawan takes a <span className="text-zinc-500">'work-first'</span> approach, hitting every deadline and providing invaluable market strategy alongside top-tier development."
+          I understand your problem <span className="text-zinc-500">before</span> I write a single line. I scope precisely, build cleanly, and keep you informed at every step — no surprises, no bloat. Just <span className="text-zinc-500">purposeful work</span> that ships and scales.
         </motion.h2>
         <motion.div
            initial={{ opacity: 0 }}
@@ -732,8 +933,8 @@ const Testimonial = () => {
            transition={{ duration: 0.8, delay: 0.3 }}
            viewport={{ once: true }}
         >
-          <p className="text-white font-bold text-2xl mb-2">Gopal Deshmukh</p>
-          <p className="text-zinc-500 uppercase tracking-widest text-sm font-bold">CEO of Buildhand</p>
+          <p className="text-white font-bold text-2xl mb-2">Pawan Upadhyay</p>
+          <p className="text-zinc-500 uppercase tracking-widest text-sm font-bold">How I work — on every project</p>
         </motion.div>
       </div>
     </section>
@@ -799,48 +1000,152 @@ const FAQ = () => {
   );
 };
 
-const Footer = () => {
+const ContactCTA = () => {
   return (
-    <footer id="contact" className="pt-32 pb-10 px-6 bg-[#050505] border-t border-white/5 relative overflow-hidden">
-      {/* Background glow */}
+    <section className="pt-32 pb-20 px-6 bg-[#050505] border-t border-white/5 relative overflow-hidden">
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[1000px] h-[500px] bg-blue-600/5 rounded-[100%] blur-[150px] pointer-events-none translate-y-1/2" />
-      
+
       <div className="max-w-7xl mx-auto relative z-10 flex flex-col items-center text-center">
-        <motion.h2 
+        <motion.h2
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           viewport={{ once: true }}
           className="text-5xl md:text-7xl lg:text-[8rem] font-black tracking-tighter mb-8 text-white leading-[1]"
         >
-          Building the Next Big.<br/><span className="text-zinc-600">Startup?</span>
+          Building the Next Big.<br /><span className="text-zinc-600">Startup?</span>
         </motion.h2>
-        
+
         <p className="text-xl md:text-3xl text-zinc-400 mb-14 max-w-3xl font-medium">
           I help founders and startups create products that users actually trust.
         </p>
-        
-        <a 
-          href="mailto:contact@pawanupadhyay.com" 
+
+        <a
+          href="https://wa.me/918707483603?text=Hi%20Pawan%2C%20I%20came%20across%20your%20portfolio%20and%20I%27d%20love%20to%20discuss%20a%20project%20with%20you.%20Are%20you%20available%20for%20a%20quick%20chat%3F"
+          target="_blank"
+          rel="noopener noreferrer"
           className="group relative inline-flex items-center justify-center px-10 py-5 text-xl font-bold text-black bg-white rounded-full overflow-hidden transition-transform hover:scale-105 active:scale-95"
         >
           <span className="relative z-10 flex items-center">
             Let's Collaborate <ArrowRight className="ml-3 w-6 h-6 group-hover:translate-x-1 transition-transform" />
           </span>
         </a>
-        
-        <div className="mt-40 pt-10 border-t border-white/10 w-full flex flex-col md:flex-row justify-between items-center text-zinc-500 font-medium">
-          <div className="text-center md:text-left mb-6 md:mb-0">
-            <p className="text-white text-lg font-bold mb-1">Pawan Upadhyay.</p>
-            <p className="text-sm">Full Stack Developer & UI/UX Designer crafting high-impact digital experiences.</p>
+
+      </div>
+    </section>
+  );
+};
+
+const Footer = () => {
+  return (
+    <footer id="contact" className="bg-[#050505] border-t border-white/10">
+
+      {/* Top — contact label + big email */}
+      <div className="max-w-7xl mx-auto px-6 pt-16 pb-12 border-b border-white/5">
+        <p className="text-xs font-bold uppercase tracking-widest text-zinc-500 mb-4">Contact Us</p>
+        <motion.a
+          href="mailto:upwan592@gmail.com?subject=Project%20Inquiry&body=Hi%20Pawan%2C%20I%20came%20across%20your%20portfolio%20and%20I%27d%20love%20to%20discuss%20a%20project%20with%20you.%20Are%20you%20available%20for%20a%20quick%20chat%3F"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7, ease: [0.16,1,0.3,1] }}
+          className="text-3xl md:text-5xl lg:text-6xl font-black text-emerald-400 hover:text-emerald-300 transition-colors tracking-tight break-all"
+        >
+          upwan592@gmail.com
+        </motion.a>
+      </div>
+
+      {/* Main grid — 4 columns */}
+      <div className="max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 border-b border-white/5">
+
+        {/* Col 1 — Bio */}
+        <div>
+          <p className="text-[10px] font-black uppercase tracking-widest text-zinc-600 mb-5">Designed & Developed By</p>
+          <h3 className="text-xl font-black text-white mb-2 tracking-tight">Pawan Upadhyay</h3>
+          <p className="text-zinc-500 text-sm leading-relaxed mb-5">
+            Full Stack Developer & Associate Software Engineer crafting enterprise and web solutions.
+          </p>
+          <p className="text-xs text-zinc-600 font-semibold">Based in Hyderabad, India</p>
+          <div className="flex flex-wrap gap-2 mt-4">
+            {['Angular', 'React', 'Python', 'Ionic', '.NET'].map(tag => (
+              <span key={tag} className="text-[10px] font-bold text-zinc-500 border border-white/10 rounded-full px-3 py-1 uppercase tracking-wider">
+                {tag}
+              </span>
+            ))}
           </div>
-          <div className="flex space-x-8 text-sm font-bold uppercase tracking-wider">
-            <a href="#" className="hover:text-white transition-colors flex items-center">Twitter</a>
-            <a href="#" className="hover:text-white transition-colors flex items-center">GitHub</a>
-            <a href="#" className="hover:text-white transition-colors flex items-center">LinkedIn</a>
+        </div>
+
+        {/* Col 2 — Quick Links */}
+        <div>
+          <p className="text-[10px] font-black uppercase tracking-widest text-zinc-600 mb-5">Quick Links</p>
+          <nav className="flex flex-col gap-3">
+            {[['Work', '#work'], ['Services', '#services'], ['FAQ', '#faq'], ['Contact', '#contact']].map(([label, href]) => (
+              <a key={label} href={href} className="text-white font-semibold text-sm hover:text-zinc-400 transition-colors w-fit">
+                {label}
+              </a>
+            ))}
+          </nav>
+        </div>
+
+        {/* Col 3 — Legal */}
+        <div>
+          <p className="text-[10px] font-black uppercase tracking-widest text-zinc-600 mb-5">Legal</p>
+          <nav className="flex flex-col gap-3">
+            {['Privacy Policy', 'Terms & Conditions', 'Code of Conduct'].map(item => (
+              <span key={item} className="text-zinc-500 font-medium text-sm cursor-default">{item}</span>
+            ))}
+          </nav>
+        </div>
+
+        {/* Col 4 — Contact details */}
+        <div className="flex flex-col gap-8">
+          <div>
+            <p className="text-[10px] font-black uppercase tracking-widest text-zinc-600 mb-4">General Enquiries</p>
+            <p className="text-white font-bold text-sm mb-1">Pawan Upadhyay</p>
+            <a href="tel:+918707483603" className="text-zinc-400 text-sm hover:text-white transition-colors block">+91 8707483603</a>
+            <a href="https://wa.me/918707483603" target="_blank" rel="noopener noreferrer" className="text-emerald-400 text-xs font-bold hover:text-emerald-300 transition-colors mt-1 block">
+              WhatsApp →
+            </a>
+          </div>
+          <div>
+            <p className="text-[10px] font-black uppercase tracking-widest text-zinc-600 mb-4">Project Enquiries</p>
+            <p className="text-white font-bold text-sm mb-1">Consultancy</p>
+            <a href="mailto:upwan592@gmail.com?subject=Project%20Inquiry&body=Hi%20Pawan%2C%20I%20came%20across%20your%20portfolio%20and%20I%27d%20love%20to%20discuss%20a%20project%20with%20you.%20Are%20you%20available%20for%20a%20quick%20chat%3F" className="text-zinc-400 text-xs hover:text-white transition-colors break-all">
+              upwan592@gmail.com
+            </a>
           </div>
         </div>
       </div>
+
+      {/* Bottom bar */}
+      <div className="max-w-7xl mx-auto px-6 py-6 flex flex-col md:flex-row items-center justify-between gap-4">
+        <p className="text-zinc-600 text-xs font-medium">
+          © 2026 Pawan Upadhyay. All Rights Reserved.
+        </p>
+        <div className="flex items-center gap-3">
+          {/* LinkedIn */}
+          <a href="https://linkedin.com/in/upawan" target="_blank" rel="noopener noreferrer"
+            className="w-9 h-9 rounded-full bg-zinc-900 border border-white/10 flex items-center justify-center hover:bg-zinc-700 transition-colors">
+            <svg className="w-4 h-4 text-zinc-400" fill="currentColor" viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+          </a>
+          {/* GitHub */}
+          <a href="https://github.com/u-pawan" target="_blank" rel="noopener noreferrer"
+            className="w-9 h-9 rounded-full bg-zinc-900 border border-white/10 flex items-center justify-center hover:bg-zinc-700 transition-colors">
+            <svg className="w-4 h-4 text-zinc-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+          </a>
+          {/* WhatsApp */}
+          <a href="https://wa.me/918707483603" target="_blank" rel="noopener noreferrer"
+            className="w-9 h-9 rounded-full bg-zinc-900 border border-white/10 flex items-center justify-center hover:bg-zinc-700 transition-colors">
+            <svg className="w-4 h-4 text-zinc-400" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          </a>
+          {/* Email */}
+          <a href="mailto:upwan592@gmail.com?subject=Project%20Inquiry&body=Hi%20Pawan%2C%20I%20came%20across%20your%20portfolio%20and%20I%27d%20love%20to%20discuss%20a%20project%20with%20you.%20Are%20you%20available%20for%20a%20quick%20chat%3F"
+            className="w-9 h-9 rounded-full bg-zinc-900 border border-white/10 flex items-center justify-center hover:bg-zinc-700 transition-colors">
+            <svg className="w-4 h-4 text-zinc-400" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+          </a>
+        </div>
+      </div>
+
     </footer>
   );
 };
@@ -863,7 +1168,8 @@ export default function App() {
         <Testimonial />
         <FAQ />
       </main>
-      
+
+      <ContactCTA />
       <Footer />
     </div>
   );
